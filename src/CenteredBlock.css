@@ -1,0 +1,101 @@
+/* Global Styles */
+.centered-block {
+  display: flex;
+  align-items: center; /* Center vertically */
+  justify-content: center; /* Center horizontally */
+  height: 100vh; /* Full height of the viewport */
+  width: 100vw; /* Full width */
+  margin: 0; /* Remove margin to fully center */
+  overflow: hidden; /* Prevent scrolling */
+}
+
+/* Content Box */
+.content {
+  background-color: #F7F7F7;
+  width: 90vw;
+  max-width: 850px; /* Prevent it from stretching too much */
+  height: auto; /* Adjust to content height */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  position: relative;
+}
+
+/* Ensure no scrolling */
+html, body {
+  height: 100%;
+  margin: 0;
+  overflow: hidden; /* Prevent page scrolling */
+}
+
+/* Image Styles */
+img {
+  width: 100%;
+  max-width: 850px;
+  height: auto;
+  object-fit: cover;
+  border-radius: 8px;
+  transition: opacity 0.3s ease;
+}
+
+/* Description Box */
+.description {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 10px;
+  max-width: 80%;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+}
+
+/* Hover Effect - Show Description Only */
+.content:hover .description {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Ensure Image Stays Visible */
+.content:hover img {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Mobile View */
+@media (max-width: 768px) {
+  .content {
+    width: 95vw;
+    padding: 15px;
+  }
+
+  .start-btn {
+    font-size: 1rem;
+    padding: 10px 20px;
+  }
+}
+
+/* Very Small Devices */
+@media (max-width: 480px) {
+  .content {
+    width: 98vw;
+    padding: 10px;
+  }
+
+  .start-btn {
+    font-size: 0.9rem;
+    padding: 8px 16px;
+  }
+}

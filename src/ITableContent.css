@@ -1,0 +1,12 @@
+#srtid {
+  border-spacing: 10px;
+}
+.tbod td {
+  background-color: #F7F7F7;
+  border-bottom: 1px solid #BCBCBC;
+  width:177px;
+  height:46px;
+  text-align: center;
+  color:#7F7F7F;
+  font-weight: bold;
+}

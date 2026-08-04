@@ -1,0 +1,20 @@
+/* Styling for Submit Button */
+.submit-button {
+  background-color: #F6C90E;
+  border: none;
+  padding: 16px 30px;
+  font-size: 1.3rem;
+  font-weight: bold;
+  border-radius: 8px;
+  color: #212121;
+  display: flex;
+  justify-content: center; /* Center text horizontally */
+  align-items: center; /* Center text vertically */
+  width: auto; /* Button width based on content */
+  text-align: center; /* Center text */
+}
+
+.submit-button:hover {
+  background-color: #F6C90E;
+  transform: scale(1.05);
+}

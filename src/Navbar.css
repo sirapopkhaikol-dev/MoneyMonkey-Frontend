@@ -1,0 +1,120 @@
+/* Global Font Styles */
+body {
+    font-family: 'IBM Plex Sans Thai', sans-serif !important;
+    margin: 0;
+    padding: 0;
+}
+
+/* Navbar Base Styles */
+.navbar {
+    background-color: #212121 !important;
+    height: 80px;
+    transition: background-color 0.3s ease-in-out;
+}
+
+/* Navbar Brand */
+.navbar-brand {
+    font-size: 32px;
+    font-weight: 600;
+    margin-left: 20px;
+    color: #F6C90E;
+}
+
+.navbar-brand .dotcom {
+    font-size: 20px;
+    color: #F7F7F7;
+}
+
+/* Navbar Toggler */
+.navbar-toggler {
+    border: none;
+    width: 40px;
+    justify-content: center;
+}
+
+.navbar-toggler-icon {
+    display: flex;
+    justify-self: center;
+}
+
+.nav-item {
+    cursor: pointer;
+    padding-top: 20px;
+}
+
+/* Navbar Links */
+.navbar-nav .nav-link {
+    font-size: 18px;
+    font-weight: 600;
+    color: #ffffff !important;
+    background-color: #212121 ;
+    padding: 10px 15px;
+    opacity: 100;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.container-fluid {
+    background-color: #212121;
+    z-index: 1000;
+}
+
+/* Mobile Menu Styling */
+@media (max-width: 350px) {
+    /* Navbar */
+    .navbar {
+        height: 70px;
+    }
+
+    .navbar-brand {
+        font-size: 28px;
+        margin-left: 10px;
+    }
+
+    /* Navbar Links */
+    .navbar-nav .nav-link {
+        font-size: 16px;
+        padding: 8px 10px;
+    }
+
+    /* Mobile Menu */
+    .navbar-collapse {
+        background-color: #212121 !important;
+        padding: 10px ;
+        border-radius: 5px;
+        display: none; /* Ensure it's hidden initially */
+        z-index: 1000;
+    }
+
+    .navbar-nav .nav-link {
+        color: white !important;
+    }
+
+    .navbar-collapse.show {
+        max-height: 500px;
+        background-color: #212121 !important;
+        display: block;
+        opacity: 1;
+        
+    }
+
+    .navbar-nav {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .navbar-nav .nav-item {
+        width: 100%;
+        text-align: center;
+    }
+
+    .navbar-nav .nav-link {
+        padding: 12px;
+        width: 100%;
+        display: block;
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+

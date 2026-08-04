@@ -1,0 +1,25 @@
+
+.submit-button {
+    background-color: #F6C90E; /* Bright yellow */
+    color: #212121; /* Dark text for contrast */
+    font-family: "IBM Plex Sans Thai", sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    width: 150px; /* Fixed width */
+    height: 40px; /* Fixed height */
+    border: none;
+    border-radius: 5px; /* Same as FillBox */
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Match FillBox shadow */
+}
+
+.submit-button:hover {
+    background-color: #E5B80D; /* Slightly darker yellow */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.submit-button:active {
+    background-color: #D4A50C;
+    transform: scale(0.98);
+}

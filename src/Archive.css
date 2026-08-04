@@ -1,0 +1,30 @@
+.text-center{
+    width: 30vw;
+    margin: 50px;
+}
+
+/* Archive.css */
+.card {
+    border-radius: 8px; 
+    gap: 15px;/* Rounded corners for the cards */
+  }
+  
+  .card-header {
+    background-color: #f8f9fa;
+    font-size: 1.25rem;
+    font-weight: bold;
+  }
+  
+  .card-body {
+    padding: 1.5rem;
+  }
+  
+  .card-footer {
+    background-color: #f8f9fa;
+  }
+  
+  button {
+    width: 100%; /* Make the button span the full width */
+    margin-top: 1rem;
+  }
+  

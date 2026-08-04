@@ -1,0 +1,61 @@
+/* src/Pages/LoginBlock.css */
+
+.login-block {
+    display: flex;
+    align-items: center; /* Center vertically */
+    justify-content: center; /* Center horizontally */
+    height: 75vh; /* Adjust height to fit the layout */
+    width: 100%;
+    margin-top: 50px; /* Space from navbar */
+}
+
+.login-content {
+    background-color: #F7F7F7;
+    width: 440px;
+    height: 518px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    align-items: center; /* Center elements horizontally */
+    justify-content: center; /* Center elements vertically */
+    gap: 30px; /* Decrease the gap between elements */
+    position: relative; /* Create a reference point for absolute positioning */
+}
+
+.login-content h2 {
+    margin-top: 10px; /* Adjust space from top */
+}
+
+.login-content h6 {
+    font-size: 14px; 
+    font-weight: 600;
+    cursor: pointer;
+    text-align: center; /* Center the text */
+    margin-top: 20px;
+    text-decoration: none; /* Remove underline */
+}
+
+/* Link for Forget Password - red color and positioned above Register */
+.login-content .ForgetPassword {
+    position: absolute;
+    bottom: 40px; /* Position at the bottom */
+    right: 20px; /* Position from the left */
+    font-size: 14px;
+    color: red;  /* Set red color for "ลืมรหัสผ่าน?" */
+    font-weight: 600;
+    text-decoration: none; /* Remove underline */
+}
+
+/* Link for Register - yellow color and positioned below Forget Password */
+.login-content .Register {
+    position: absolute;
+    bottom: 10px; /* Position at the bottom */
+    right: 20px; /* Position from the left */
+    font-size: 14px;
+    color: #F6C90E;  /* Set yellow color for "ลงทะเบียนใช้งาน" */
+    font-weight: 600;
+    text-decoration: none; /* Remove underline */
+}
