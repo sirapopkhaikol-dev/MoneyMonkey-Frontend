@@ -1,0 +1,1 @@
+export type Api = "get" | "post" | "put" | "patch" | "delete"
