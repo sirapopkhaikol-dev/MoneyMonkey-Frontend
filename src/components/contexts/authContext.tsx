@@ -31,7 +31,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
-    console.log('isLoading ->>>>',isLoading);
 
     useEffect(() => {
         const getValueWhenRefresh = async () => {

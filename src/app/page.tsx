@@ -23,7 +23,7 @@ export default function Home() {
 
           <div className="mt-8 flex gap-4">
             <a
-              href="/login"
+              href="/prediction"
               className="rounded-md bg-black px-6 py-3 text-sm font-medium text-white transition hover:bg-gray-800"
             >
               Get Started
@@ -152,7 +152,7 @@ export default function Home() {
           </p>
 
           <a
-            href="/login"
+            href="/prediction"
             className="mt-8 inline-block rounded-md bg-white px-6 py-3 text-sm font-medium text-black transition hover:bg-gray-200"
           >
             Start Forecasting

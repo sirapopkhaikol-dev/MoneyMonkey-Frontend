@@ -4,8 +4,6 @@ import Image from "next/image";
 import { useState } from "react";
 import LoginModal from "./auth/loginModal";
 import { useAuth } from "./contexts/authContext";
-import { useApi } from "@/hooks/useApi";
-
 
 export default function NavBar() {
 
@@ -13,20 +11,12 @@ export default function NavBar() {
 
     const { user, isLoading } = useAuth();
 
-    const { get } = useApi();
-
-    const ButtonClick = async() => {
-        const req = await get('/api/predictions/find/resultHistory/21')
-
-        console.log('button',req)
-    }
-
     return(
         <>
             <header className="sticky top-0 z-50 bg-black text-white">
                 <nav className="mx-auto h-16 max-w-6xl flex items-center justify-between px-6">
                     {/* Logo */}
-                    <Link href="/" onClick={() => ButtonClick()} className="text-lg font-bold">
+                    <Link href="/" className="text-lg font-bold">
                         MoneyMonkey
                     </Link>
 

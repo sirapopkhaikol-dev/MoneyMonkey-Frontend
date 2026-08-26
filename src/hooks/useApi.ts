@@ -41,6 +41,7 @@ export function useApi() {
             // invalid (logout) or 
             // Network Error or 
             // Api Error
+            // console.error('error ->>>>',error);
             return await ApiHanler(error, 'post', url, body);
  
         }
