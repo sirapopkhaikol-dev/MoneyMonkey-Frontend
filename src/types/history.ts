@@ -52,21 +52,17 @@ export type server_State = {
 
 // in history/[id]/page.tsx
 
-export type IdHistoryResult = {
-    predictions: predictions,
+export type server_State_2 = {
+    predictions: {
+        created_at : string,
+        initial_amount : number,
+        n_years : number,
+        prediction_id : number,
+        results : {
+            amount : number,
+            inflation_rate : number,
+            year : number
+        } [],
+    },
     rowCount : number
-}
-
-export type predictions = {
-    created_at : string,
-    initial_amount : number,
-    n_years : number,
-    prediction_id : number,
-    results : Resultpredictions[]
-}
-
-export type Resultpredictions = {
-    amount : number,
-    inflation_rate : number,
-    year : number
 }

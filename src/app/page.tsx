@@ -1,4 +1,5 @@
 // import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -22,12 +23,12 @@ export default function Home() {
           </p>
 
           <div className="mt-8 flex gap-4">
-            <a
+            <Link
               href="/prediction"
               className="rounded-md bg-black px-6 py-3 text-sm font-medium text-white transition hover:bg-gray-800"
             >
               Get Started
-            </a>
+            </Link>
 
             <a
               href="#how-it-works"

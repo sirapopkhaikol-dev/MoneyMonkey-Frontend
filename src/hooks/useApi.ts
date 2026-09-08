@@ -1,5 +1,6 @@
 import { useAuth } from "@/components/contexts/authContext"
 import ApiServices from "@/services/api"
+import ApiError from "@/services/apiError"
 import AuthServices from "@/services/auth"
 import { Api } from "@/types/api"
 
@@ -19,7 +20,7 @@ export function useApi() {
             // invalid (logout) or 
             // Network Error or 
             // Api Error
-            return await ApiHanler(error, 'get', url, undefined);
+            return await ApiHandler(error, 'get', url, undefined);
  
         }
 
@@ -42,51 +43,89 @@ export function useApi() {
             // Network Error or 
             // Api Error
             // console.error('error ->>>>',error);
-            return await ApiHanler(error, 'post', url, body);
+            return await ApiHandler(error, 'post', url, body);
  
         }
     }
 
-    const ApiHanler = async (
+    const ApiHandler = async (
         error : unknown, 
         method : Api, 
         url : string = '/',
         body : object | undefined = undefined,
     ) => {
-        try {
-            // in the future, we will change detext by error.code
-            console.log('Route Error')
-            if ((error instanceof Error && error.message === "Access token expired")) {
-                console.log('Token Exppire')
 
-                const refresh = await AuthServices.refresh()
+        if (error instanceof ApiError) {
 
-                const new_access_Token = refresh.access_Token
-                const user_info = refresh.user_info
-                
-                setAccessToken(new_access_Token)
-                setUser(user_info)
+            switch (error.code) {
 
-                console.log('refresh finish')
+                // 1. Unauthorize (Send Api without headers['Authorization'] = `Bearer ${accessToken}`) to the protect api
+                case "UNAUTHORIZED":
+                    console.log(error.message);
+                    // in component will receive error.message , error.status to toast
+                    throw error;
 
-                const res = await ApiServices.apiFetch(method, url, body, new_access_Token)
-                return res
+                // 2. Access token expired
+                case "ACCESS_TOKEN_EXPIRED":
+                    try {
+
+                        const refresh = await AuthServices.refreshOnce()
+                        // const refresh = await AuthServices.refresh()
+
+                        const new_access_Token = refresh.access_Token
+                        const user_info = refresh.user_info
+                        
+                        setAccessToken(new_access_Token)
+                        setUser(user_info)
+
+                        const res = await ApiServices.apiFetch(method, url, body, new_access_Token)
+                        return res
+                    }
+                    catch (error) {
+                        // if step 2 refresh token fail
+                        // example code = REFRESH_TOKEN_EXPIRED, USER_NOT_LOGIN, INVALID_REFRESH_TOKEN, USER_NOT_FOUND
+
+                        if (error instanceof ApiError) {
+
+                            // case 'REFRESH_TOKEN_EXPIRED'
+                            // case 'INVALID_REFRESH_TOKEN'
+                            // case 'USER_NOT_LOGIN'
+                            // case 'USER_NOT_FOUND'
+                            console.log(error.message)
+                            console.log(error.status)
+
+                            throw error
+
+                        }
+
+                        // other error from ApiServices.apiFetch, component that call this before will receive error.message , error.status to toast
+                        throw error
+                    }  
+
+                // 3. Access token invalid
+                case "INVALID_ACCESS_TOKEN":
+                    console.log(error.message)
+                    // - logout, clear token, redirect
+                    // - component that call this before will receive error.message , error.status to toast
+                    throw error
+              
+                default:
+                    break;
             }
 
-            // future we need to check by res.code because
-            // not every Error need to return to / (login)
-            else { throw new Error }
-        } 
-        catch (error) {
-            // refresh expire/invalid or 
-            // network Error or
-            // Api Error from else { throw new Error } or
-            // accessToken have error from else { throw new Error }
-            console.log('refreshToken Expire or Invalid or Network Error or Api Error ->>>>',error);
-            // redirect to / to login again if not is api error
-            // or retrun default value
-            // future feature
+            // 4. Normal Api Error from default break
+            // 6. 204 No content 
+
+            throw error;
+
         }
+
+
+        // 5. Network Error
+ 
+        // in component will receive error.message , error.status to toast
+        throw error;
+    
     }
 
     return {

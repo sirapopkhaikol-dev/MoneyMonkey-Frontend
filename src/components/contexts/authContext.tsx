@@ -35,26 +35,21 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     useEffect(() => {
         const getValueWhenRefresh = async () => {
             try {
-                const req = await AuthServices.refresh()
+                const req = await AuthServices.refreshOnce()
                 setUser(req.user_info);
                 setAccessToken(req.access_Token);
             }
             catch (error) {
                  //so this catch error , need to happen from Authservice.refresh() return Error , for example 1.dont have refresh token (user dont login yet) , we should not alert error 2. refresh token expired this is where error should alert 
 
-                if ((error instanceof Error && error.message === "User not Login")) {
-                    console.log('AuthProvider : User not Login')
-                    //continue , dont toast and dont redirect
-                }
-                else if (error instanceof Error && error.message === "jwt expired") { 
-                    // this case of refresh token expire
-                    // toast here and redirect to login
-                    console.log('AuthProvider : jwt expired');
-                    // may be redirect to / page
-                }
-                else {
-                    console.log('AuthProvider : ', error)
-                }
+                // the same as api return step 2 refresh token fail
+                // example code = REFRESH_TOKEN_EXPIRED, USER_NOT_LOGIN, INVALID_REFRESH_TOKEN, USER_NOT_FOUND
+                console.log(error instanceof Error ? error.message : 'Refresh Token Expire or Invalid')
+
+                // should not be responsible for user-facing API error notifications.
+                // for example first visit
+                // time we will not throw error becuase this function call by useEffect
+                // throw error
 
                 setUser(null);
                 setAccessToken(null);

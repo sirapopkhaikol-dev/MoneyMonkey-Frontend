@@ -2,7 +2,7 @@
 
 import { useAuth } from "@/components/contexts/authContext";
 import { useApi } from "@/hooks/useApi";
-import { IdHistoryResult } from "@/types/history";
+import { server_State_2 } from "@/types/history";
 import { useParams } from "next/navigation"
 import { useEffect, useState } from "react";
 
@@ -17,10 +17,12 @@ export default function ResultHistory () {
     const { isLoading } = useAuth();
     const { get } = useApi();
 
-    const [resultHistoryLoading, setResultHistoryLoading] = useState<boolean>(false);
-    const [isError, setIsError] = useState<boolean>(false);
+    const [clientState, setClientState] = useState({
+        resultHistoryLoading: false,
+        isError: false
+    })
 
-    const [resultHistoryResult, setResultHistoryResult] = useState<IdHistoryResult>({
+    const [serverState, setServerState] = useState<server_State_2>({
         predictions : {
             created_at : '',
             initial_amount : 0,
@@ -29,7 +31,6 @@ export default function ResultHistory () {
             results : []
         },
         rowCount : 0
-        
     })
 
     useEffect(() => {
@@ -38,33 +39,35 @@ export default function ResultHistory () {
 
         const fetchResultHistory = async() => {
             try {
-                setIsError(false)
-                setResultHistoryLoading(true)
+                setClientState(prev =>({
+                    ...prev,
+                    isError: false,
+                    resultHistoryLoading: true
+                }))
                 
                 const res = await get(`/api/predictions/find/resultHistory/${id}`)
                 
                 const predictions = res.data.predictions;
                 const rowCount = res.data.rowCount;
 
-                setResultHistoryResult(prev => ({
-                    ...prev,
-                    predictions : {
-                        created_at : predictions.created_at,
-                        initial_amount : predictions.initial_amount,
-                        n_years : predictions.n_years,
-                        prediction_id : predictions.prediction_id,
-                        results : predictions.results
-                    },
+                setServerState(() => ({
+                    predictions : predictions,
                     rowCount: rowCount
                 }))
 
             } 
             catch (error) {
-                setIsError(true)
+                setClientState(prev =>({
+                    ...prev,
+                    isError: true,
+                }))
                 console.log('error ->>>>',error);
             }
             finally {
-                setResultHistoryLoading(false)
+                setClientState(prev =>({
+                    ...prev,
+                    resultHistoryLoading: false
+                }))
             }
         }
 
@@ -77,37 +80,35 @@ export default function ResultHistory () {
 
     // for render in ui
     const renderStatus = () => {
-        if (resultHistoryLoading || isLoading) { 
+        if (clientState.resultHistoryLoading || isLoading) { 
             return <p>Loading...</p>
             
         }
-        else if (isError) {
+        if (clientState.isError) {
             return <p>Get Predictions Data Fail !. Please try again later.</p>
         }
-        else if (resultHistoryResult.predictions.results.length > 0) {
+        if (serverState.predictions.results.length > 0) {
             return <p>Get Data Successfully !</p>
         }
-        else {
-            return <p>No data found</p>
-        }
+        return <p>No data found.</p>
     }
 
     const renderResHistoryResult = () => {
 
-        if (resultHistoryResult.predictions.results.length <= 0) return null
+        if (serverState.predictions.results.length <= 0) return null
 
         return (
             <div className="flex flex-col gap-2">
-                <p className="">Initial Amount : {resultHistoryResult.predictions.initial_amount}</p>
-                <p className="">Total Years : {resultHistoryResult.predictions.n_years}</p>
-                <p className="">Create At : { format(resultHistoryResult.predictions.created_at, "PPpp") }</p>
-                <p className="text-end">Total Rows : {resultHistoryResult.rowCount}</p>
+                <p className="">Initial Amount : {serverState.predictions.initial_amount}</p>
+                <p className="">Total Years : {serverState.predictions.n_years}</p>
+                <p className="">Create At : { format(serverState.predictions.created_at, "PPpp") }</p>
+                <p className="text-end">Total Rows : {serverState.rowCount}</p>
                 <div className="flex justify-between border-b-2 border-dashed border-black/60">
                     <div className="">Amount</div>
                     <div className="">Inflation Rate</div>
                     <div className="">Year</div>
                 </div>
-                { resultHistoryResult.predictions.results.map( item  => (
+                { serverState.predictions.results.map( item  => (
                     <div
                         key={item.year} 
                         className="flex justify-between"
@@ -117,7 +118,7 @@ export default function ResultHistory () {
                         <p>{item.year}</p>
                     </div>
                 ))}
-                <ChartPrediction  predictionResult={resultHistoryResult.predictions.results}/>
+                <ChartPrediction  predictionResult={serverState.predictions.results}/>
             </div>
         )
     }

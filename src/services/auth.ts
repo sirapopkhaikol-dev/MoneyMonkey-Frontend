@@ -1,3 +1,18 @@
+import ApiError from "./apiError";
+
+type RefreshResult = {
+    access_Token: string,
+    user_info : {
+        email: string,
+        id: number,
+        name: string,
+        picture: string,
+        role: string
+    }
+}
+
+let refreshPromise : Promise<RefreshResult> | null = null
+
 class AuthServices {
     static googleLogin = async ( idToken : string ) => {
 
@@ -14,9 +29,11 @@ class AuthServices {
             
         );
 
-        if (req.status != 200) { throw new Error }
-
         const res = await req.json()
+
+        if (!req.ok) {
+            throw new ApiError(res.message, req.status, res.code)
+        }
 
         const data = res.data
         const access_Token = data.accessToken
@@ -48,7 +65,7 @@ class AuthServices {
         const res = await req.json()
 
         if (!req.ok) {
-            throw new Error(res.message)
+            throw new ApiError(res.message, req.status, res.code)
         }
 
         const data = res.data
@@ -65,6 +82,14 @@ class AuthServices {
                 role: user_info.role
             }
         };
+    }
+
+    static refreshOnce = () => {
+        if (!refreshPromise) {
+            refreshPromise = AuthServices.refresh().finally(() => { refreshPromise = null })
+        }
+
+        return refreshPromise
     }
 }
 

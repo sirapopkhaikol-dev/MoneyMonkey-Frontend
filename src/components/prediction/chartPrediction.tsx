@@ -1,9 +1,9 @@
 
-import { PredictionResult } from '@/types/prediction'
+import { server_State } from '@/types/prediction'
 import { CartesianGrid, Legend, Line, LineChart, XAxis, YAxis} from 'recharts'
 
 type ChartPredictionProps = {
-    predictionResult: PredictionResult[]
+    predictionResult: server_State['predictionResult']
 }
 
 

@@ -3,24 +3,31 @@
 import { useApi } from "@/hooks/useApi";
 import React, { useState } from "react";
 
-import { PredictionResult } from "@/types/prediction";
+import { server_State } from "@/types/prediction";
 import ChartPrediction from "@/components/prediction/chartPrediction";
 
 export default function Prediction() {
 
     const { post } = useApi();
 
-    const [predictionResult, setPredictionResult] = useState<PredictionResult[]>([])
+    const [clientState, setClientState] = useState({
+        predictionFormValue : {
+            n_years : '',
+            initial_amount : ''
+        },
+        // independent from isLoading in useAuth() , this will make sure that local use after send api
+        isLoading : false,
+        isError : false
+    })
+
+    const [serverState, setServerState] = useState<server_State>({
+        predictionResult : []
+    })
 
     const [predictionFormValue, setPredictionFormValue] = useState({
         n_years: '',
         initial_amount: ''
     })
-
-    // independent from isLoading in useAuth() , this will make sure that local use after send api
-    const [isLoading, setIsLoading] = useState<boolean>(false)
-
-    const [isError, setIsError] = useState<boolean>(false)
 
     const PredictionFormValueChange = (e : React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target
@@ -33,8 +40,12 @@ export default function Prediction() {
     const PredictionFormSubmit = async ( e : React.FormEvent<HTMLFormElement> ) => {
 
         e.preventDefault()
-        setIsLoading(true)
-        setIsError(false)
+
+        setClientState(prev => ({
+            ...prev,
+            isLoading : true,
+            isError : false
+        }))
 
         // if this form error , so UI will be Loading forever !
         try {
@@ -46,7 +57,9 @@ export default function Prediction() {
 
             const data = prediction.data.predictions;
 
-            setPredictionResult(data)
+            setServerState(() => ({
+                predictionResult : data
+            }))
 
             // will toast here
         
@@ -54,33 +67,39 @@ export default function Prediction() {
         catch (error) {
             // prediction === undefined for some reason in await fetch
             // will toast here
-            setIsError(true)
+            setClientState(prev => ({
+                ...prev,
+                isError : true
+            }))
             console.log('prediction have an error', error);
         }
         finally {
-           setIsLoading(false) 
+           setClientState(prev => ({
+                ...prev,
+                isLoading : false
+            })) 
         }
     }
 
     // for render in ui logic
     const renderStatus = () => {
-        if (isLoading) {
+        if (clientState.isLoading) {
             return <p>Loading...</p>
         }
-        else if (isError) {
-            return <p>Prediction failed. Please try again later</p>
-        }
-        else if (predictionResult.length > 0) {
-            return <p>Prediction Successfully!</p>
-        }
-        else {
-            return <p>Ready to prediction</p>
+
+        if (clientState.isError) {
+            return <p>Search history failed! Please try again later.</p>
         }
 
+        if (serverState.predictionResult.length > 0) {
+            return <p>Prediction Successfully!</p>
+        }
+
+        return <p>No Prediction Data.</p>
     }
 
     const renderPredictionResult = () => {
-        if (predictionResult.length <= 0) { return null }
+        if (serverState.predictionResult.length <= 0) { return null }
 
         return (
             <div className="flex flex-col p-6 gap-4">
@@ -90,7 +109,7 @@ export default function Prediction() {
                         <div className="">Inflation Rate</div>
                         <div className=""> Year</div>
                     </div>
-                    { predictionResult.map( item  => (
+                    { serverState.predictionResult.map( item  => (
                         <div key={item.year} className="flex justify-between">
                             <p>{item.amount}</p>
                             <p>{((item.inflation_rate) * 100 ).toFixed(2)} %</p>
@@ -100,7 +119,7 @@ export default function Prediction() {
 
                     {/* ChartPrediction component */}
                     <ChartPrediction 
-                        predictionResult={predictionResult} 
+                        predictionResult={serverState.predictionResult} 
                     />
                 </div>
             </div>
