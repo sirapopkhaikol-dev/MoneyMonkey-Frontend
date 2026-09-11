@@ -8,7 +8,7 @@ import { ResultHistory } from "@/components/reqHistory/resultHistory";
 import { useApi } from "@/hooks/useApi"
 import { client_State, server_State } from "@/types/history";
 import { buildHistoryParams } from "@/utils/reqHistory";
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 
 export default function History() {
 
@@ -98,11 +98,19 @@ export default function History() {
         }))
 
     }
+
+    const requestId = useRef(0);
     
     // for start when visit page , we will set page and limit to default
     useEffect(() => {
 
         if (isLoading) { return; }
+
+        const controller = new AbortController()
+
+        // Create a unique ID for THIS request
+        requestId.current += 1;
+        const currentRequestId = requestId.current
 
         const fetchReqHistory = async() => {
             setClientState(prev => ({
@@ -113,10 +121,19 @@ export default function History() {
 
             try {
                 const query = buildHistoryParams(clientState.pagination, clientState.appliedFilter)
- 
+
                 const result = await get(
-                    `/api/predictions/find/reqHistory?${query}`
+                    `/api/predictions/find/reqHistory?${query}`,
+                    controller.signal
                 )
+
+                if (!result) { 
+                    // console.log('result ->>>>',result);
+                    return; 
+                }
+
+                // Only the latest request can update the data
+                if (currentRequestId !== requestId.current) { return; }
 
                 const data = result.data.predictions;
                 const pagination = result.pagination;
@@ -134,6 +151,9 @@ export default function History() {
                 }));       
             } 
             catch (error) {
+                // Ignore errors from old requests
+                if (currentRequestId !== requestId.current) return;
+
                 setClientState(prev => ({
                     ...prev,
                     isError : true
@@ -141,6 +161,10 @@ export default function History() {
                 console.log('error ->>>>',error);
             }
             finally {
+
+                // Only the latest request can turn loading OFF
+                if (currentRequestId !== requestId.current) return;
+
                 setClientState(prev => ({
                     ...prev,
                     isHistoryLoading : false
@@ -148,6 +172,10 @@ export default function History() {
             }
         }
         fetchReqHistory();
+
+        return () => {
+            controller.abort();
+        };
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [
@@ -214,6 +242,7 @@ export default function History() {
                                     }))
                                 }
                             }
+                            disabled={clientState.isHistoryLoading}
                         >
                             <option value="10">10</option>
                             <option value="20">20</option>
@@ -225,7 +254,7 @@ export default function History() {
                         className="rounded-lg border hover:cursor-pointer px-2"
                         type="button"
                         // because Previous button when change we need to call api, just use appliedFilter
-                        disabled={clientState.pagination.page <= 1}
+                        disabled={clientState.pagination.page <= 1 || clientState.isHistoryLoading}
                         onClick={() => setClientState(prev => ({
                             ...prev,
                             pagination: {
@@ -250,13 +279,14 @@ export default function History() {
                                 }
                             }))
                         }}
+                        isHistoryLoading={clientState.isHistoryLoading}
                     />
 
                     <button
                         className="rounded-lg border hover:cursor-pointer px-2"
                         type="button"
                         // because Previous button when change we need to call api, just use appliedFilter
-                        disabled={clientState.pagination.page >= serverState.pagination.lastPage }
+                        disabled={clientState.pagination.page >= serverState.pagination.lastPage || clientState.isHistoryLoading }
                         onClick={() => setClientState(prev => ({
                             ...prev,
                             pagination : {

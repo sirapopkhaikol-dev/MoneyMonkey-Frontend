@@ -24,16 +24,14 @@ export default function Prediction() {
         predictionResult : []
     })
 
-    const [predictionFormValue, setPredictionFormValue] = useState({
-        n_years: '',
-        initial_amount: ''
-    })
-
     const PredictionFormValueChange = (e : React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target
-        setPredictionFormValue(prev => ({
+        setClientState(prev => ({
             ...prev,
-            [name] : value
+            predictionFormValue : {
+                ...prev.predictionFormValue,
+                [name] : value
+            }
         }))
     }
 
@@ -47,10 +45,9 @@ export default function Prediction() {
             isError : false
         }))
 
-        // if this form error , so UI will be Loading forever !
         try {
-            const n_years = predictionFormValue.n_years
-            const initial_amount = predictionFormValue.initial_amount
+            const n_years = clientState.predictionFormValue.n_years
+            const initial_amount = clientState.predictionFormValue.initial_amount
 
             const body = {n_years, initial_amount}
             const prediction = await post('/api/predictions/create', body)
@@ -83,12 +80,9 @@ export default function Prediction() {
 
     // for render in ui logic
     const renderStatus = () => {
-        if (clientState.isLoading) {
-            return <p>Loading...</p>
-        }
-
+       
         if (clientState.isError) {
-            return <p>Search history failed! Please try again later.</p>
+            return <p>Prediction failed! Please try again later.</p>
         }
 
         if (serverState.predictionResult.length > 0) {
@@ -135,13 +129,14 @@ export default function Prediction() {
                     <input 
                         type="number" 
                         name="n_years" 
-                        value={predictionFormValue.n_years}
+                        value={clientState.predictionFormValue.n_years}
                         onChange={PredictionFormValueChange}
                         id="n_years" 
                         className="border"
                         required
                         min={1}
                         max={150}
+                        disabled={clientState.isLoading}
                     />
                 </div>
                 <div className="gap-2 flex">
@@ -149,17 +144,24 @@ export default function Prediction() {
                     <input 
                         type="number" 
                         name="initial_amount"
-                        value={predictionFormValue.initial_amount}
+                        value={clientState.predictionFormValue.initial_amount}
                         onChange={PredictionFormValueChange} 
                         id="initial_amount" 
                         className="border" 
                         required
                         min={1}
+                        disabled={clientState.isLoading}
                     />
 
                 </div>
 
-                <button type="submit" className="border rounded-md">Get Preduction</button>
+                <button 
+                    type="submit" 
+                    className="border rounded-md"
+                    disabled={clientState.isLoading}
+                > 
+                    {clientState.isLoading ? 'Predicting...' : 'Get Prediction'}
+                </button>
                 { renderStatus() }
 
             </form>

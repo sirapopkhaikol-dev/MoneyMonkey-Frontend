@@ -4,23 +4,31 @@ import ApiError from "@/services/apiError"
 import AuthServices from "@/services/auth"
 import { Api } from "@/types/api"
 
+
 export function useApi() {
     const { accessToken, setUser, setAccessToken } = useAuth()
     // const { isLoading } = useAuth()
 
-    const get = async (url: string = '/') => {
+    const get = async (
+        url: string = '/', 
+        signal ?: AbortSignal
+    ) => {
         try {
             // prevent when accessToken state is null when start app
             // if (isLoading === true && accessToken === null) {return}  we will change to detect in component instead
-            const res = await ApiServices.apiFetch('get', url, undefined, accessToken)
+            const res = await ApiServices.apiFetch('get', url, undefined, accessToken, signal)
             return res
         } 
         catch (error) {
+
+            // cancellation → don't treat as an error
+            if (error instanceof DOMException && error.name === "AbortError") { return; }
+
             // accessToken expire or 
             // invalid (logout) or 
             // Network Error or 
             // Api Error
-            return await ApiHandler(error, 'get', url, undefined);
+            return await ApiHandler(error, 'get', url, undefined, signal);
  
         }
 
@@ -53,6 +61,7 @@ export function useApi() {
         method : Api, 
         url : string = '/',
         body : object | undefined = undefined,
+        signal ?: AbortSignal
     ) => {
 
         if (error instanceof ApiError) {
@@ -78,7 +87,7 @@ export function useApi() {
                         setAccessToken(new_access_Token)
                         setUser(user_info)
 
-                        const res = await ApiServices.apiFetch(method, url, body, new_access_Token)
+                        const res = await ApiServices.apiFetch(method, url, body, new_access_Token, signal)
                         return res
                     }
                     catch (error) {

@@ -7,7 +7,8 @@ type ReqData = {
         'Content-Type': string,
         'Authorization' ?:string
     },
-    body ?: string
+    body ?: string,
+    signal ?: AbortSignal
 }
 
 class ApiServices {
@@ -16,7 +17,8 @@ class ApiServices {
         method: Api,
         url: string = '/', 
         body: object | undefined = undefined, 
-        accessToken: string | null 
+        accessToken: string | null ,
+        signal ?: AbortSignal
     ) => {
 
         const reqData :  ReqData = {
@@ -25,6 +27,7 @@ class ApiServices {
                 'Content-Type': 'application/json'
             },
             body: body ? JSON.stringify(body) : undefined,
+            signal : signal
         }
 
         if (accessToken) {

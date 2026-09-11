@@ -4,7 +4,7 @@ import { useAuth } from "@/components/contexts/authContext";
 import { useApi } from "@/hooks/useApi";
 import { server_State_2 } from "@/types/history";
 import { useParams } from "next/navigation"
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { format } from "date-fns"
 import ChartPrediction from "@/components/prediction/chartPrediction";
@@ -33,9 +33,17 @@ export default function ResultHistory () {
         rowCount : 0
     })
 
+    const requestId = useRef(0)
+
     useEffect(() => {
 
         if (isLoading) return;
+
+        const controller = new AbortController()
+
+        // Create a unique ID for THIS request
+        requestId.current += 1;
+        const currentRequestId = requestId.current
 
         const fetchResultHistory = async() => {
             try {
@@ -45,7 +53,15 @@ export default function ResultHistory () {
                     resultHistoryLoading: true
                 }))
                 
-                const res = await get(`/api/predictions/find/resultHistory/${id}`)
+                const res = await get(
+                    `/api/predictions/find/resultHistory/${id}`,
+                    controller.signal
+                )
+
+                if (!res) { return; }
+
+                // Only the latest request can update the data
+                if (currentRequestId !== requestId.current) { return; }
                 
                 const predictions = res.data.predictions;
                 const rowCount = res.data.rowCount;
@@ -57,6 +73,9 @@ export default function ResultHistory () {
 
             } 
             catch (error) {
+                // Ignore errors from old requests
+                if (currentRequestId !== requestId.current) return;
+
                 setClientState(prev =>({
                     ...prev,
                     isError: true,
@@ -64,6 +83,9 @@ export default function ResultHistory () {
                 console.log('error ->>>>',error);
             }
             finally {
+                // Only the latest request can turn loading OFF
+                if (currentRequestId !== requestId.current) return;
+                
                 setClientState(prev =>({
                     ...prev,
                     resultHistoryLoading: false
@@ -72,6 +94,10 @@ export default function ResultHistory () {
         }
 
         fetchResultHistory();
+
+        return () => {
+            controller.abort()
+        }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     },[isLoading, id])
