@@ -35,17 +35,17 @@ export default function NavBar() {
                     </Link> 
                     
                     {/* ===================================================== DESKTOP — Center Navigation ====================================================== */} 
-                    <div className=" hidden items-center gap-8 text-body-sm md:flex " > 
+
+                    {/* ===================================================== DESKTOP — Auth ====================================================== */}
+                    <div className="shrink-0 hidden md:flex items-center gap-8 text-body-sm "> 
                         <Link href="/#how-it-works" className=" text-white/70 transition hover:text-white hover:bg-white/10 p-2 rounded-md" > 
                             How It Works 
                         </Link> 
+
                         <Link href="/#about" className=" text-white/70 transition hover:text-white hover:bg-white/10 p-2 rounded-md" > 
                             About 
                         </Link> 
-                    </div>
 
-                    {/* ===================================================== DESKTOP — Auth ====================================================== */}
-                    <div className="shrink-0 hidden md:flex"> 
                         { isLoading ? ( <AuthSkeletonNavbar /> ) : 
                                 user ? ( <UserSectionNavbar 
                                             name={user.name} 

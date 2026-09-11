@@ -7,7 +7,7 @@ export default function UserSectionNavbar(
         <div className="flex min-w-0 items-center gap-3"> 
             <button 
                 type="button" 
-                className=" hidden md:flex min-w-0 w-40 justify-center items-center 
+                className=" hidden min-w-0 w-40 justify-center items-center 
                     rounded-md bg-brand px-4 py-2 text-body-sm 
                     font-medium text-black transition hover:opacity-90 " 
             > 

@@ -6,160 +6,1103 @@ export default function Home() {
     <main className="min-h-screen bg-white text-black">
 
       {/* Hero */}
-      <section className="mx-auto flex min-h-[calc(100vh-73px)] max-w-6xl items-center px-6 py-20">
-        <div className="max-w-3xl">
+      <section
+          className="
+              relative
+              isolate
+              overflow-hidden
+              bg-black
+          "
+      >
 
-          <p className="mb-4 text-sm font-medium uppercase tracking-widest text-gray-500">
-            AI Inflation Forecasting
-          </p>
+          {/* Background image */}
+          <div
+              className="
+                  absolute
+                  inset-0
+                  -z-20
+                  bg-[url('/money.jpg')]
+                  bg-cover
+                  bg-position-[65%_center]
+                  bg-no-repeat
+              "
+          />
 
-          <h1 className="text-5xl font-bold tracking-tight sm:text-6xl">
-            Understand the future of your money.
-          </h1>
+          {/* Readability overlay */}
+          <div
+              className="
+                  absolute
+                  inset-0
+                  -z-10
+                  bg-linear-to-r
+                  from-black
+                  via-black/50
+                  to-white/20
+              "
+          />
 
-          <p className="mt-6 max-w-2xl text-lg leading-8 text-gray-600">
-            MoneyMonkey uses historical economic data and machine learning
-            to forecast future inflation and estimate its impact on your money.
-          </p>
+          {/* Hero content */}
+          <div
+              className="
+                  mx-auto
+                  flex
+                  min-h-[calc(100vh-4rem)]
+                  w-full
+                  max-w-7xl
+                  items-center
+                  px-4
+                  py-16
+                  sm:px-6
+                  lg:px-8
+              "
+          >
+              <div className="min-w-0 max-w-2xl">
 
-          <div className="mt-8 flex gap-4">
-            <Link
-              href="/prediction"
-              className="rounded-md bg-black px-6 py-3 text-sm font-medium text-white transition hover:bg-gray-800"
-            >
-              Get Started
-            </Link>
+                  {/* Eyebrow */}
+                  <p
+                      className="
+                          text-body-sm
+                          font-medium
+                          uppercase
+                          tracking-[0.2em]
+                          text-greekvilla/75
+                      "
+                  >
+                      AI Inflation Forecasting
+                  </p>
 
-            <a
-              href="#how-it-works"
-              className="rounded-md border border-gray-300 px-6 py-3 text-sm font-medium text-black transition hover:bg-gray-100"
-            >
-              How It Works
-            </a>
+                  {/* Heading */}
+                  <h1
+                      className="
+                          mt-4
+                          text-display
+                          font-bold
+                          leading-tight
+                          tracking-tight
+                          text-greekvilla
+                      "
+                  >
+                      Understand the Future of Your <span className="text-brand">Money</span>
+                  </h1>
+
+                  {/* Description */}
+                  <p
+                      className="
+                          mt-6
+                          max-w-xl
+                          text-body
+                          leading-7
+                          text-greekvilla/67
+                      "
+                  >
+                      MoneyMonkey uses historical economic data and
+                      machine learning to forecast future inflation
+                      and estimate its impact on your money.
+                  </p>
+
+                  {/* Actions */}
+                  <div
+                      className="
+                          mt-8
+                          flex
+                          flex-wrap
+                          items-center
+                          gap-3
+                      "
+                  >
+                      <Link
+                          href="/prediction"
+                          className="
+                              inline-flex
+                              items-center
+                              justify-center
+                              rounded-md
+                              bg-brand-500
+                              px-5
+                              py-3
+                              text-body-sm
+                              font-medium
+                              text-black
+                              transition
+                              hover:bg-brand-400
+                          "
+                      >
+                          Get Started
+                      </Link>
+
+                      <a
+                          href="YOUR_YOUTUBE_VIDEO_URL"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="
+                              inline-flex
+                              items-center
+                              justify-center
+                              gap-2
+                              rounded-md
+                              bg-white/80
+                              px-5
+                              py-3
+                              text-body-sm
+                              font-medium
+                              text-black
+                              backdrop-blur-sm
+                              transition
+                              hover:bg-white/90
+                          "
+                      >
+                          <span aria-hidden="true">▶</span>
+                          Watch Video
+                      </a>
+                  </div>
+
+              </div>
           </div>
 
-        </div>
       </section>
 
 
       {/* How It Works */}
       <section
-        id="how-it-works"
-        className="border-t border-gray-200 bg-gray-50"
+          id="how-it-works"
+          className="
+              border-t
+              border-black/10
+              bg-white
+          "
       >
-        <div className="mx-auto max-w-6xl px-6 py-20">
+          <div
+              className="
+                  mx-auto
+                  w-full
+                  max-w-7xl
+                  px-4
+                  py-20
+                  sm:px-6
+                  lg:px-8
+              "
+          >
+              {/* Section heading */}
+              <div className="max-w-2xl">
+                  <p
+                      className="
+                          text-body-sm
+                          font-medium
+                          uppercase
+                          tracking-[0.2em]
+                          text-brand-700
+                      "
+                  >
+                      How It Works
+                  </p>
 
-          <div className="mb-12">
-            <p className="text-sm font-medium uppercase tracking-widest text-gray-500">
-              How It Works
-            </p>
+                  <h2
+                      className="
+                          mt-3
+                          text-h2
+                          font-bold
+                          leading-tight
+                          tracking-tight
+                          text-black
+                      "
+                  >
+                      See where your money
+                      <span className="text-brand-500"> could be headed.</span>
+                  </h2>
 
-            <h2 className="mt-2 text-3xl font-bold">
-              From economic data to prediction.
-            </h2>
+                  <p
+                      className="
+                          mt-4
+                          max-w-xl
+                          text-body
+                          leading-7
+                          text-muted
+                      "
+                  >
+                      MoneyMonkey turns historical inflation data into a
+                      clearer picture of how your money may change over time.
+                  </p>
+              </div>
+
+              {/* Process */}
+              <div className="mt-14">
+
+                  {/* Timeline */}
+                  <div
+                      className="
+                          grid
+                          gap-10
+                          md:grid-cols-3
+                          md:gap-0
+                      "
+                  >
+
+                      {/* Step 01 */}
+                      <div className="relative min-w-0 md:pr-10">
+
+                          {/* Timeline */}
+                          <div
+                              className="
+                                  mb-6
+                                  flex
+                                  items-center
+                              "
+                          >
+                              <span
+                                  className="
+                                      flex
+                                      h-11
+                                      w-11
+                                      shrink-0
+                                      items-center
+                                      justify-center
+                                      rounded-full
+                                      bg-brand-500
+                                      text-body-sm
+                                      font-bold
+                                      text-black
+                                  "
+                              >
+                                  01
+                              </span>
+
+                              <div
+                                  className="
+                                      hidden
+                                      h-px
+                                      flex-1
+                                      bg-black/15
+                                      md:block
+                                  "
+                              />
+                          </div>
+
+                          <h3
+                              className="
+                                  text-h3
+                                  font-semibold
+                                  tracking-tight
+                                  text-black
+                              "
+                          >
+                              Enter your amount
+                          </h3>
+
+                          <p
+                              className="
+                                  mt-3
+                                  max-w-sm
+                                  text-body-sm
+                                  leading-6
+                                  text-muted
+                              "
+                          >
+                              Start with the amount of money you want
+                              to understand.
+                          </p>
+                      </div>
+
+
+                      {/* Step 02 */}
+                      <div className="relative min-w-0 md:px-5">
+
+                          {/* Timeline */}
+                          <div
+                              className="
+                                  mb-6
+                                  flex
+                                  items-center
+                              "
+                          >
+                              <span
+                                  className="
+                                      flex
+                                      h-11
+                                      w-11
+                                      shrink-0
+                                      items-center
+                                      justify-center
+                                      rounded-full
+                                      bg-brand-500
+                                      text-body-sm
+                                      font-bold
+                                      text-black
+                                  "
+                              >
+                                  02
+                              </span>
+
+                              <div
+                                  className="
+                                      hidden
+                                      h-px
+                                      flex-1
+                                      bg-black/15
+                                      md:block
+                                  "
+                              />
+                          </div>
+
+                          <h3
+                              className="
+                                  text-h3
+                                  font-semibold
+                                  tracking-tight
+                                  text-black
+                              "
+                          >
+                              Forecast inflation
+                          </h3>
+
+                          <p
+                              className="
+                                  mt-3
+                                  max-w-sm
+                                  text-body-sm
+                                  leading-6
+                                  text-muted
+                              "
+                          >
+                              MoneyMonkey analyzes historical inflation
+                              patterns to estimate future changes.
+                          </p>
+                      </div>
+
+
+                      {/* Step 03 */}
+                      <div className="relative min-w-0 md:pl-5">
+
+                          {/* Timeline */}
+                          <div
+                              className="
+                                  mb-6
+                                  flex
+                                  items-center
+                              "
+                          >
+                              <span
+                                  className="
+                                      flex
+                                      h-11
+                                      w-11
+                                      shrink-0
+                                      items-center
+                                      justify-center
+                                      rounded-full
+                                      bg-brand-500
+                                      text-body-sm
+                                      font-bold
+                                      text-black
+                                  "
+                              >
+                                  03
+                              </span>
+                          </div>
+
+                          <h3
+                              className="
+                                  text-h3
+                                  font-semibold
+                                  tracking-tight
+                                  text-black
+                              "
+                          >
+                              See the future
+                          </h3>
+
+                          <p
+                              className="
+                                  mt-3
+                                  max-w-sm
+                                  text-body-sm
+                                  leading-6
+                                  text-muted
+                              "
+                          >
+                              See how inflation could affect the future
+                              value of your money.
+                          </p>
+                      </div>
+
+                  </div>
+
+
+                  {/* Financial visual */}
+                  <div
+                      className="
+                          mt-16
+                          overflow-hidden
+                          rounded-xl
+                          border
+                          border-black/10
+                          bg-black
+                          p-6
+                          sm:p-8
+                      "
+                  >
+                      <div
+                          className="
+                              flex
+                              flex-col
+                              gap-8
+                              lg:flex-row
+                              lg:items-end
+                              lg:justify-between
+                          "
+                      >
+
+                          {/* Value */}
+                          <div className="min-w-0">
+
+                              <p
+                                  className="
+                                      text-body-sm
+                                      uppercase
+                                      tracking-[0.15em]
+                                      text-white/50
+                                  "
+                              >
+                                  Example
+                              </p>
+
+                              <div className="mt-3 flex items-baseline gap-2">
+                                  <span
+                                      className="
+                                          truncate
+                                          text-3xl
+                                          font-bold
+                                          tracking-tight
+                                          text-white
+                                          sm:text-4xl
+                                      "
+                                  >
+                                      $100,000
+                                  </span>
+
+                                  <span
+                                      className="
+                                          shrink-0
+                                          text-body-sm
+                                          text-white/50
+                                      "
+                                  >
+                                      today
+                                  </span>
+                              </div>
+
+                              <p
+                                  className="
+                                      mt-2
+                                      max-w-sm
+                                      text-body-sm
+                                      leading-6
+                                      text-white/60
+                                  "
+                              >
+                                  See how inflation may affect its
+                                  purchasing power over time.
+                              </p>
+
+                          </div>
+
+
+                          {/* Chart */}
+                          <div
+                              className="
+                                  min-w-0
+                                  flex-1
+                                  lg:max-w-2xl
+                              "
+                          >
+                              <div
+                                  className="
+                                      relative
+                                      h-40
+                                      w-full
+                                  "
+                              >
+
+                                  {/* Horizontal guide lines */}
+                                  <div
+                                      className="
+                                          absolute
+                                          inset-x-0
+                                          top-0
+                                          border-t
+                                          border-white/10
+                                      "
+                                  />
+
+                                  <div
+                                      className="
+                                          absolute
+                                          inset-x-0
+                                          top-1/2
+                                          border-t
+                                          border-white/10
+                                      "
+                                  />
+
+                                  <div
+                                      className="
+                                          absolute
+                                          inset-x-0
+                                          bottom-0
+                                          border-t
+                                          border-white/10
+                                      "
+                                  />
+
+                                  {/* Chart line */}
+                                  <svg
+                                      viewBox="0 0 600 160"
+                                      className="
+                                          absolute
+                                          inset-0
+                                          h-full
+                                          w-full
+                                          overflow-visible
+                                      "
+                                      preserveAspectRatio="none"
+                                  >
+                                      <path
+                                          d="
+                                              M 0 25
+                                              C 90 30, 120 42, 180 55
+                                              S 280 75, 340 92
+                                              S 450 112, 600 135
+                                          "
+                                          fill="none"
+                                          stroke="currentColor"
+                                          strokeWidth="4"
+                                          className="text-brand-500"
+                                      />
+
+                                      {/* End point */}
+                                      <circle
+                                          cx="600"
+                                          cy="135"
+                                          r="6"
+                                          className="fill-brand-500"
+                                      />
+                                  </svg>
+
+                                  {/* End value */}
+                                  <div
+                                      className="
+                                          absolute
+                                          bottom-0
+                                          right-0
+                                          translate-y-full
+                                          pt-2
+                                      "
+                                  >
+                                      <span
+                                          className="
+                                              text-body-sm
+                                              font-semibold
+                                              text-brand-500
+                                          "
+                                      >
+                                          Future value
+                                      </span>
+                                  </div>
+
+                              </div>
+
+                              {/* Years */}
+                              <div
+                                  className="
+                                      mt-8
+                                      flex
+                                      justify-between
+                                      text-caption
+                                      text-white/40
+                                  "
+                              >
+                                  <span>2026</span>
+                                  <span>2030</span>
+                                  <span>2035</span>
+                                  <span>2040</span>
+                              </div>
+                          </div>
+
+                      </div>
+                  </div>
+
+              </div>
           </div>
-
-
-          <div className="grid gap-6 md:grid-cols-3">
-
-            {/* Step 1 */}
-            <div className="rounded-lg border border-gray-200 bg-white p-6">
-              <span className="text-sm font-semibold text-gray-500">
-                01
-              </span>
-
-              <h3 className="mt-4 text-xl font-semibold">
-                Historical Data
-              </h3>
-
-              <p className="mt-3 text-sm leading-6 text-gray-600">
-                MoneyMonkey uses historical economic data as the foundation
-                for its forecasting model.
-              </p>
-            </div>
-
-
-            {/* Step 2 */}
-            <div className="rounded-lg border border-gray-200 bg-white p-6">
-              <span className="text-sm font-semibold text-gray-500">
-                02
-              </span>
-
-              <h3 className="mt-4 text-xl font-semibold">
-                AI Model
-              </h3>
-
-              <p className="mt-3 text-sm leading-6 text-gray-600">
-                A machine learning model analyzes historical patterns to
-                estimate future inflation.
-              </p>
-            </div>
-
-
-            {/* Step 3 */}
-            <div className="rounded-lg border border-gray-200 bg-white p-6">
-              <span className="text-sm font-semibold text-gray-500">
-                03
-              </span>
-
-              <h3 className="mt-4 text-xl font-semibold">
-                Forecast
-              </h3>
-
-              <p className="mt-3 text-sm leading-6 text-gray-600">
-                View the predicted inflation rate and understand how it may
-                affect your money over time.
-              </p>
-            </div>
-
-          </div>
-        </div>
       </section>
 
 
-      {/* About */}
-      <section id="about" className="mx-auto max-w-6xl px-6 py-20">
+      {/* About MoneyMonkey */}
+      <section
+          id="about"
+          className="
+              border-t
+              border-black/10
+              bg-brand-50
+          "
+      >
+          <div
+              className="
+                  mx-auto
+                  w-full
+                  max-w-7xl
+                  px-4
+                  py-20
+                  sm:px-6
+                  lg:px-8
+              "
+          >
+              <div
+                  className="
+                      grid
+                      gap-14
+                      lg:grid-cols-2
+                      lg:items-center
+                      lg:gap-20
+                  "
+              >
 
-        <div className="max-w-3xl">
-          <p className="text-sm font-medium uppercase tracking-widest text-gray-500">
-            About MoneyMonkey
-          </p>
+                  {/* Text */}
+                  <div className="min-w-0">
 
-          <h2 className="mt-2 text-3xl font-bold">
-            A simple way to explore inflation forecasts.
-          </h2>
+                      <p
+                          className="
+                              text-body-sm
+                              font-medium
+                              uppercase
+                              tracking-[0.2em]
+                              text-brand-700
+                          "
+                      >
+                          About MoneyMonkey
+                      </p>
 
-          <p className="mt-5 leading-7 text-gray-600">
-            MoneyMonkey is a full-stack application that combines a web
-            frontend, backend API, database, and machine learning service
-            into one forecasting platform.
-          </p>
-        </div>
+                      <h2
+                          className="
+                              mt-3
+                              max-w-xl
+                              text-h2
+                              font-bold
+                              leading-tight
+                              tracking-tight
+                              text-black
+                          "
+                      >
+                          Inflation is easy to overlook.
+                          <span className="block text-brand-600">
+                              Its impact isn&apos;t.
+                          </span>
+                      </h2>
 
+                      <p
+                          className="
+                              mt-6
+                              max-w-xl
+                              text-body
+                              leading-7
+                              text-muted
+                          "
+                      >
+                          MoneyMonkey was built to make the future impact
+                          of inflation easier to understand.
+                      </p>
+
+                      <p
+                          className="
+                              mt-4
+                              max-w-xl
+                              text-body-sm
+                              leading-6
+                              text-muted
+                          "
+                      >
+                          By combining historical economic data with
+                          machine learning, MoneyMonkey helps turn
+                          complicated inflation patterns into a clearer
+                          picture of how your money may change over time.
+                      </p>
+
+                      {/* Technology line */}
+                      <div
+                          className="
+                              mt-8
+                              border-t
+                              border-black/10
+                              pt-6
+                          "
+                      >
+                          <p
+                              className="
+                                  text-caption
+                                  font-medium
+                                  uppercase
+                                  tracking-[0.15em]
+                                  text-black/50
+                              "
+                          >
+                              Built as a full-stack forecasting platform
+                          </p>
+
+                          <div
+                              className="
+                                  mt-3
+                                  flex
+                                  flex-wrap
+                                  gap-x-5
+                                  gap-y-2
+                                  text-body-sm
+                                  font-medium
+                                  text-black
+                              "
+                          >
+                              <span>Web Application</span>
+                              <span className="text-black/20">/</span>
+                              <span>Backend API</span>
+                              <span className="text-black/20">/</span>
+                              <span>Machine Learning</span>
+                          </div>
+                      </div>
+
+                  </div>
+
+
+                  {/* Visual */}
+                  <div
+                      className="
+                          relative
+                          min-w-0
+                      "
+                  >
+                      <div
+                          className="
+                              relative
+                              overflow-hidden
+                              rounded-2xl
+                              bg-black
+                              p-6
+                              sm:p-8
+                          "
+                      >
+
+                          {/* Header */}
+                          <div
+                              className="
+                                  flex
+                                  items-start
+                                  justify-between
+                                  gap-4
+                              "
+                          >
+                              <div className="min-w-0">
+
+                                  <p
+                                      className="
+                                          text-caption
+                                          uppercase
+                                          tracking-[0.15em]
+                                          text-white/40
+                                      "
+                                  >
+                                      Purchasing power
+                                  </p>
+
+                                  <p
+                                      className="
+                                          mt-2
+                                          text-body-sm
+                                          text-white/60
+                                      "
+                                  >
+                                      Example over time
+                                  </p>
+
+                              </div>
+
+                              <span
+                                  className="
+                                      shrink-0
+                                      rounded-full
+                                      bg-brand-500
+                                      px-3
+                                      py-1
+                                      text-caption
+                                      font-semibold
+                                      text-black
+                                  "
+                              >
+                                  Inflation
+                              </span>
+                          </div>
+
+
+                          {/* Amount */}
+                          <div className="mt-10">
+
+                              <p
+                                  className="
+                                      text-4xl
+                                      font-bold
+                                      tracking-tight
+                                      text-white
+                                      sm:text-5xl
+                                  "
+                              >
+                                  $100,000
+                              </p>
+
+                              <p
+                                  className="
+                                      mt-2
+                                      text-body-sm
+                                      text-white/50
+                                  "
+                              >
+                                  Starting value
+                              </p>
+
+                          </div>
+
+
+                          {/* Visual chart */}
+                          <div className="mt-10">
+
+                              <div
+                                  className="
+                                      relative
+                                      h-40
+                                      w-full
+                                  "
+                              >
+
+                                  {/* Grid */}
+                                  <div
+                                      className="
+                                          absolute
+                                          inset-x-0
+                                          top-0
+                                          border-t
+                                          border-white/10
+                                      "
+                                  />
+
+                                  <div
+                                      className="
+                                          absolute
+                                          inset-x-0
+                                          top-1/2
+                                          border-t
+                                          border-white/10
+                                      "
+                                  />
+
+                                  <div
+                                      className="
+                                          absolute
+                                          inset-x-0
+                                          bottom-0
+                                          border-t
+                                          border-white/10
+                                      "
+                                  />
+
+                                  {/* Curve */}
+                                  <svg
+                                      viewBox="0 0 600 160"
+                                      className="
+                                          absolute
+                                          inset-0
+                                          h-full
+                                          w-full
+                                      "
+                                      preserveAspectRatio="none"
+                                  >
+                                      <path
+                                          d="
+                                              M 0 20
+                                              C 90 25, 120 35, 180 50
+                                              S 290 70, 350 90
+                                              S 470 110, 600 135
+                                          "
+                                          fill="none"
+                                          stroke="currentColor"
+                                          strokeWidth="4"
+                                          className="text-brand-500"
+                                      />
+
+                                      <circle
+                                          cx="600"
+                                          cy="135"
+                                          r="6"
+                                          className="fill-brand-500"
+                                      />
+                                  </svg>
+
+                              </div>
+
+                              {/* Years */}
+                              <div
+                                  className="
+                                      mt-4
+                                      flex
+                                      justify-between
+                                      text-caption
+                                      text-white/40
+                                  "
+                              >
+                                  <span>2026</span>
+                                  <span>2030</span>
+                                  <span>2035</span>
+                                  <span>2040</span>
+                              </div>
+
+                          </div>
+
+
+                          {/* Bottom message */}
+                          <div
+                              className="
+                                  mt-8
+                                  border-t
+                                  border-white/10
+                                  pt-5
+                              "
+                          >
+                              <p
+                                  className="
+                                      text-body-sm
+                                      leading-6
+                                      text-white/60
+                                  "
+                              >
+                                  The same amount of money can buy less
+                                  as prices rise over time.
+                              </p>
+                          </div>
+
+                      </div>
+                  </div>
+
+              </div>
+          </div>
       </section>
 
 
       {/* CTA */}
-      <section className="border-t border-gray-200 bg-black text-white">
-        <div className="mx-auto max-w-6xl px-6 py-20 text-center">
-
-          <h2 className="text-3xl font-bold">
-            Ready to make a prediction?
-          </h2>
-
-          <p className="mx-auto mt-4 max-w-xl text-gray-400">
-            Create a prediction and explore how inflation could change
-            the value of your money over time.
-          </p>
-
-          <a
-            href="/prediction"
-            className="mt-8 inline-block rounded-md bg-white px-6 py-3 text-sm font-medium text-black transition hover:bg-gray-200"
+      <section
+          className="
+              border-t
+              border-black/10
+              bg-black
+              text-white
+          "
+      >
+          <div
+              className="
+                  mx-auto
+                  w-full
+                  max-w-7xl
+                  px-4
+                  py-24
+                  sm:px-6
+                  lg:px-8
+              "
           >
-            Start Forecasting
-          </a>
+              <div
+                  className="
+                      mx-auto
+                      max-w-3xl
+                      text-center
+                  "
+              >
 
-        </div>
+                  {/* Eyebrow */}
+                  <p
+                      className="
+                          text-body-sm
+                          font-medium
+                          uppercase
+                          tracking-[0.2em]
+                          text-brand-500
+                      "
+                  >
+                      Ready to explore?
+                  </p>
+
+
+                  {/* Heading */}
+                  <h2
+                      className="
+                          mt-4
+                          text-h2
+                          font-bold
+                          leading-tight
+                          tracking-tight
+                          text-white
+                      "
+                  >
+                      See what inflation could
+                      <span className="block text-brand-500">
+                          mean for your money.
+                      </span>
+                  </h2>
+
+
+                  {/* Description */}
+                  <p
+                      className="
+                          mx-auto
+                          mt-5
+                          max-w-xl
+                          text-body
+                          leading-7
+                          text-white/60
+                      "
+                  >
+                      Put your own number into MoneyMonkey and explore
+                      how inflation could affect its value over time.
+                  </p>
+
+
+                  {/* CTA */}
+                  <div className="mt-8">
+                      <a
+                          href="/prediction"
+                          className="
+                              inline-flex
+                              items-center
+                              justify-center
+                              rounded-md
+                              bg-brand-500
+                              px-6
+                              py-3
+                              text-body-sm
+                              font-semibold
+                              text-black
+                              transition
+                              hover:bg-brand-400
+                          "
+                      >
+                          Make a Prediction
+                      </a>
+                  </div>
+
+
+                  {/* Supporting text */}
+                  <p
+                      className="
+                          mt-4
+                          text-caption
+                          text-white/40
+                      "
+                  >
+                      Explore your potential future value with MoneyMonkey.
+                  </p>
+
+              </div>
+          </div>
       </section>
 
     </main>

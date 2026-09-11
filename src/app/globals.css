@@ -16,6 +16,11 @@
     --surface: #ffffff;
     --border: #000000;
     --muted: #666666;
+    --whiteonwhite: #EDEFEF;
+    --rosewhite: #FFFAFA;
+    --whitedove: #F0EFE7;
+    --titanwhite: #EEEEFF;
+    --greekvilla: #F0EBE3;
 
     /* ---------- Feedback ---------- */
     --success: #22c55e;
@@ -40,7 +45,26 @@
     --color-border: var(--border);
 
     --color-brand: var(--brand-orange);
+
+    /* MoneyMonkey Brand Orange */
+    --color-brand-50: #FFF8E7;
+    --color-brand-100: #FFF0C2;
+    --color-brand-200: #FFE29A;
+    --color-brand-300: #FFD36B;
+    --color-brand-400: #FFC34A;
+    --color-brand-500: #FEB729;
+    --color-brand-600: #E99D00;
+    --color-brand-700: #B97900;
+    --color-brand-800: #875800;
+    --color-brand-900: #583900;
+    --color-brand-950: rgb(148, 104, 16);
+    
     --color-muted: var(--muted);
+    --color-whiteonwhite: var(--whiteonwhite);
+    --color-rosewhite: var(--rosewhite);
+    --color-whitedove: var(--whitedove);
+    --color-titanwhite: var(--titanwhite);
+    --color-greekvilla: var(--greekvilla);
 
     --color-success: var(--success);
     --color-warning: var(--warning);
@@ -72,7 +96,7 @@
    ========================================================= */
 
 body {
-    background: var(--background);
+    background: var(--foreground);
     color: var(--foreground);
     font-family: Arial, Helvetica, sans-serif;
 }
