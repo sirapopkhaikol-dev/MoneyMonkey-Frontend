@@ -118,11 +118,12 @@ export default function PredictionResultView({
                                 mt-1
                                 truncate
                                 text-2xl
-                                font-bold
+                                font-semibold
                                 tracking-tight
+                                flex items-center gap-0.5
                             "
                         >
-                            ฿{startAmount.toLocaleString()}
+                            <span className="font-medium">฿</span>{startAmount.toLocaleString()}
                         </p>
 
                     </div>
@@ -145,12 +146,13 @@ export default function PredictionResultView({
                                 mt-1
                                 truncate
                                 text-2xl
-                                font-bold
+                                font-semibold
                                 tracking-tight
                                 text-brand-600
+                                flex items-center gap-0.5
                             "
                         >
-                            ฿{finalAmount.toLocaleString()}
+                            <span className="font-medium">฿</span>{finalAmount.toLocaleString()}
                         </p>
 
                     </div>
@@ -346,7 +348,7 @@ export default function PredictionResultView({
                                 </span>
 
                                 <span className="font-medium">
-                                    ฿{item.amount.toLocaleString()}
+                                    <span className="font-light">฿</span>{item.amount.toLocaleString()}
                                 </span>
 
                             </div>

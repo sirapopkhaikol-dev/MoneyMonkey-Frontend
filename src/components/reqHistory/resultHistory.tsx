@@ -95,9 +95,11 @@ export default function ResultHistory({
 
                 {serverState.reqHistory.map((item) => (
                     <Link
+                        title="Details"
                         href={`/dashboard/history/${item.id}`}
                         key={item.id}
                         className="
+                            hover:cursor-pointer
                             group
                             grid
                             min-w-0
@@ -148,9 +150,11 @@ export default function ResultHistory({
                                 self-center
                                 text-body-sm
                                 font-semibold
+                                flex
+                                gap-0.5
                             "
                         >
-                            ฿
+                            <span className="font-medium">฿</span>
                             {Number(
                                 item.initial_amount
                             ).toLocaleString()}
@@ -285,7 +289,7 @@ export default function ResultHistory({
                                         font-semibold
                                     "
                                 >
-                                    ฿
+                                    <span className="font-medium">฿</span>
                                     {Number(
                                         item.initial_amount
                                     ).toLocaleString()}

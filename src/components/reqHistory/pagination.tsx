@@ -28,6 +28,7 @@ export default function Pagination({
         <div className="flex min-w-max items-center gap-1">
             <button
                 type="button"
+                title={currentPage <= 1 || isHistoryLoading ? '' : 'Previous Page'}
                 disabled={
                     currentPage <= 1 ||
                     isHistoryLoading
@@ -51,6 +52,7 @@ export default function Pagination({
                     hover:bg-black/3
                     disabled:cursor-not-allowed
                     disabled:opacity-30
+                    hover:cursor-pointer
                 "
             >
                 ←
@@ -78,6 +80,7 @@ export default function Pagination({
                 return (
                     <button
                         key={page}
+                        title={`page ${page}`}
                         type="button"
                         onClick={() =>
                             onPageChange(page)
@@ -96,6 +99,7 @@ export default function Pagination({
                             transition
                             disabled:cursor-not-allowed
                             disabled:opacity-40
+                            hover:cursor-pointer
                             ${
                                 page === currentPage
                                     ? "bg-black text-white"
@@ -110,6 +114,7 @@ export default function Pagination({
 
             <button
                 type="button"
+                title={currentPage >= lastPage || isHistoryLoading ? '' : 'Next Page'}
                 disabled={
                     currentPage >= lastPage ||
                     isHistoryLoading
@@ -118,6 +123,7 @@ export default function Pagination({
                     onPageChange(currentPage + 1)
                 }
                 className="
+                    hover:cursor-pointer
                     flex
                     h-9
                     min-w-9

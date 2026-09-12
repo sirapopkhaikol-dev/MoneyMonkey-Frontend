@@ -397,6 +397,7 @@ export default function History() {
                                             <select
                                                 id="limit"
                                                 name="limit"
+                                                title="Change Page"
                                                 value={
                                                     clientState
                                                         .pagination
@@ -422,6 +423,7 @@ export default function History() {
                                                     focus:border-black
                                                     disabled:cursor-not-allowed
                                                     disabled:opacity-50
+                                                    hover: cursor-pointer
                                                 "
                                             >
                                                 <option value="10">

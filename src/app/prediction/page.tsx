@@ -427,6 +427,7 @@ export default function Prediction() {
 
                                 {/* Submit */}
                                 <button
+                                    title={clientState.isLoading ? '' : 'Make a Prediction'}
                                     type="submit"
                                     disabled={clientState.isLoading}
                                     className="
@@ -439,12 +440,12 @@ export default function Prediction() {
                                         px-5
                                         py-3
                                         text-body-sm
-                                        font-semibold
                                         text-black
                                         transition
                                         hover:bg-brand-400
                                         disabled:cursor-not-allowed
                                         disabled:opacity-60
+                                        hover:cursor-pointer
                                     "
                                 >
 

@@ -210,12 +210,12 @@ export default function ResultHistory() {
                         w-full
                         max-w-7xl
                         px-4
-                        py-10
+                        py-14
                         sm:px-6
                         lg:px-8
                     "
                 >
-                    <Link
+                    {/* <Link
                         href="/dashboard/history"
                         className="
                             inline-flex
@@ -232,9 +232,9 @@ export default function ResultHistory() {
                         <span>
                             Prediction History
                         </span>
-                    </Link>
+                    </Link> */}
 
-                    <div className="mt-8 max-w-3xl">
+                    <div className="max-w-2xl">
                         <p
                             className="
                                 text-body-sm
@@ -372,11 +372,12 @@ export default function ResultHistory() {
                                             mt-2
                                             truncate
                                             text-2xl
-                                            font-bold
+                                            font-semibold
                                             tracking-tight
+                                            flex items-center gap-0.5
                                         "
                                     >
-                                        ฿
+                                        <span className="font-medium">฿</span>
                                         {Number(
                                             startAmount
                                         ).toLocaleString()}
@@ -400,11 +401,13 @@ export default function ResultHistory() {
                                             mt-2
                                             truncate
                                             text-2xl
-                                            font-bold
+                                            font-semibold
                                             tracking-tight
+                                            flex items-center gap-0.5
+                                            text-brand
                                         "
                                     >
-                                        ฿
+                                        <span className="font-medium">฿</span>
                                         {Number(
                                             finalAmount
                                         ).toLocaleString()}
@@ -427,7 +430,7 @@ export default function ResultHistory() {
                                         className={`
                                             mt-2
                                             text-2xl
-                                            font-bold
+                                            font-semibold
                                             tracking-tight
                                             ${
                                                 isValueDown
@@ -701,9 +704,10 @@ export default function ResultHistory() {
                                                 className="
                                                     text-body-sm
                                                     font-semibold
+                                                    flex gap-0.5 items-center
                                                 "
                                             >
-                                                ฿
+                                                <span className="font-medium">฿</span>
                                                 {Number(
                                                     item.amount
                                                 ).toLocaleString()}
@@ -810,7 +814,6 @@ export default function ResultHistory() {
                                     items-center
                                     gap-2
                                     text-body-sm
-                                    font-semibold
                                     text-black
                                     transition
                                     hover:text-brand-700
@@ -818,7 +821,7 @@ export default function ResultHistory() {
                             >
                                 <span>←</span>
                                 <span>
-                                    Back to prediction history
+                                    Back to Prediction History
                                 </span>
                             </Link>
                         </div>

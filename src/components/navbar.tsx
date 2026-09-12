@@ -22,7 +22,7 @@ export default function NavBar() {
                 <nav className=" mx-auto flex h-16 w-full max-w-7xl items-center justify-between px-4 sm:px-6 " > 
 
                     {/* ================================================= LEFT — Logo ================================================= */} 
-                    <Link href="/" className=" flex shrink-0 items-center text-subtitle font-bold text-white transition hover:opacity-90 " > 
+                    <Link title='MoneyMonkey' href="/" className=" flex shrink-0 items-center text-subtitle font-bold text-white transition hover:opacity-90 " > 
                         <Image 
                             src='/official_logo.png' alt="Logo" 
                             width={32}
@@ -38,19 +38,19 @@ export default function NavBar() {
 
                     {/* ===================================================== DESKTOP — Auth ====================================================== */}
                     <div className="shrink-0 hidden md:flex items-center gap-8 text-body-sm "> 
-                        <Link href="/#how-it-works" className=" text-white/70 transition hover:text-white hover:bg-white/10 p-2 rounded-md" > 
+                        <Link title='How It Works' href="/#how-it-works" className=" text-white/70 transition hover:text-white hover:bg-white/10 p-2 rounded-md" > 
                             How It Works 
                         </Link> 
 
-                        <Link href="/#about" className=" text-white/70 transition hover:text-white hover:bg-white/10 p-2 rounded-md" > 
+                        <Link title='About' href="/#about" className=" text-white/70 transition hover:text-white hover:bg-white/10 p-2 rounded-md" > 
                             About 
                         </Link> 
 
-                        <Link href="/prediction" className=" text-white/70 transition hover:text-white hover:bg-white/10 p-2 rounded-md" > 
+                        <Link title='Forecast' href="/prediction" className=" text-white/70 transition hover:text-white hover:bg-white/10 p-2 rounded-md" > 
                             Forecast
                         </Link> 
 
-                        <Link href="/dashboard/history" className=" text-white/70 transition hover:text-white hover:bg-white/10 p-2 rounded-md" > 
+                        <Link title='Activity' href="/dashboard/history" className=" text-white/70 transition hover:text-white hover:bg-white/10 p-2 rounded-md" > 
                             Activity 
                         </Link> 
 
@@ -61,11 +61,12 @@ export default function NavBar() {
                                         /> ) : 
                                     ( <button 
                                             type="button" 
+                                            title='Login'
                                             onClick={() => setClientState(prev => ({
                                                 ...prev,
                                                 isLoginOpen : true
                                             }))} 
-                                            className=" rounded-md bg-brand px-4 py-2 text-body-sm font-medium text-black transition hover:opacity-90 " 
+                                            className=" rounded-md bg-brand px-4 py-2 text-body-sm font-medium text-black transition hover:opacity-90 hover:cursor-pointer" 
                                        > 
                                             Login 
                                         </button> 
@@ -77,6 +78,7 @@ export default function NavBar() {
                     
                     <button 
                         type="button" 
+                        title={clientState.isMobileMenuOpen ? 'Close Navbar' : 'Open Navbar'}
                         aria-label="Open navigation menu" 
                         className=" flex h-10 w-10 items-center justify-center rounded-md text-white transition hover:bg-white/10 md:hidden hover:cursor-pointer" 
                         onClick={() => setClientState(prev => ({
@@ -102,6 +104,7 @@ export default function NavBar() {
                         <div className="mx-auto w-full max-w-7xl px-4 py-4 sm:px-6"> 
                             <div className="flex flex-col gap-1"> 
                                 <Link 
+                                    title='How It Works'
                                     href="/#how-it-works" 
                                     className=" rounded-md px-3 py-3 text-body-sm text-white/80 transition hover:bg-white/10 hover:text-white " 
                                     onClick={() => setClientState(prev => ({
@@ -112,6 +115,7 @@ export default function NavBar() {
                                     How It Works 
                                 </Link> 
                                 <Link 
+                                    title='About'
                                     href="/#about" 
                                     className=" rounded-md px-3 py-3 text-body-sm text-white/80 transition hover:bg-white/10 hover:text-white " 
                                     onClick={() => setClientState(prev => ({
@@ -122,6 +126,7 @@ export default function NavBar() {
                                     About 
                                 </Link> 
                                 <Link 
+                                    title='Forecast'
                                     href="/prediction" 
                                     className=" rounded-md px-3 py-3 text-body-sm text-white/80 transition hover:bg-white/10 hover:text-white " 
                                     onClick={() => setClientState(prev => ({
@@ -132,6 +137,7 @@ export default function NavBar() {
                                     Forecast
                                 </Link> 
                                 <Link 
+                                    title='Activity'
                                     href="/dashboard/history" 
                                     className=" rounded-md px-3 py-3 text-body-sm text-white/80 transition hover:bg-white/10 hover:text-white " 
                                     onClick={() => setClientState(prev => ({
@@ -151,12 +157,13 @@ export default function NavBar() {
                                                         picture={user.picture} 
                                                     /> ) : 
                                                 ( <button 
+                                                        title="Login"
                                                         type="button" 
                                                         onClick={() => setClientState(prev => ({
                                                             ...prev,
                                                             isLoginOpen : true
                                                         }))} 
-                                                        className=" rounded-md bg-brand px-4 py-2 text-body-sm font-medium text-black transition hover:opacity-90 " 
+                                                        className="hover:cursor-pointer rounded-md bg-brand px-4 py-2 text-body-sm font-medium text-black transition hover:opacity-90 " 
                                                 > 
                                                         Login 
                                                     </button> 

@@ -91,6 +91,26 @@ class AuthServices {
 
         return refreshPromise
     }
+
+    static logout = async () => {
+        const req = await fetch(
+            `${process.env.NEXT_PUBLIC_API_URL}/api/auth/logout`,
+            {
+                method: 'delete',
+                headers: { 'Content-type': 'application/json' },
+                credentials: "include"
+            }
+            
+        );
+
+        const res = await req.json()
+
+        if (!req.ok) {
+            throw new ApiError(res.message, req.status, res.code)
+        }
+
+        return
+    }
 }
 
 export default AuthServices;

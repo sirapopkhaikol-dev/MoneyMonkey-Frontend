@@ -111,6 +111,7 @@ export default function Home() {
                       "
                   >
                       <Link
+                          title="Get Started"
                           href="/prediction"
                           className="
                               inline-flex
@@ -131,6 +132,7 @@ export default function Home() {
                       </Link>
 
                       <a
+                          title="Watch Video"
                           href="YOUR_YOUTUBE_VIDEO_URL"
                           target="_blank"
                           rel="noopener noreferrer"
@@ -1079,7 +1081,6 @@ export default function Home() {
                               px-6
                               py-3
                               text-body-sm
-                              font-semibold
                               text-black
                               transition
                               hover:bg-brand-400
