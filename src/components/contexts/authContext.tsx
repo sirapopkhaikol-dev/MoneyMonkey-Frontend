@@ -39,12 +39,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
                 setUser(req.user_info);
                 setAccessToken(req.access_Token);
             }
-            catch (error) {
+            catch {
                  //so this catch error , need to happen from Authservice.refresh() return Error , for example 1.dont have refresh token (user dont login yet) , we should not alert error 2. refresh token expired this is where error should alert 
 
                 // the same as api return step 2 refresh token fail
                 // example code = REFRESH_TOKEN_EXPIRED, USER_NOT_LOGIN, INVALID_REFRESH_TOKEN, USER_NOT_FOUND
-                console.log(error instanceof Error ? error.message : 'Refresh Token Expire or Invalid')
+                // console.log(error instanceof Error ? error.message : 'Refresh Token Expire or Invalid')
 
                 // should not be responsible for user-facing API error notifications.
                 // for example first visit

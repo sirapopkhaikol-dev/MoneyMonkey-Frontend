@@ -4,11 +4,16 @@ import { useApi } from "@/hooks/useApi";
 import React, { useState } from "react";
 
 import { server_State } from "@/types/prediction";
-import ChartPrediction from "@/components/prediction/chartPrediction";
+import PredictionEmptyState from "@/components/prediction/emptyStatePrediction";
+import PredictionResultSkeleton from "@/components/prediction/resultSkeletonPrediction";
+import PredictionResultView from "@/components/prediction/resultViewPrediction";
+import { useToast } from "@/components/contexts/toastContext";
 
 export default function Prediction() {
 
     const { post } = useApi();
+
+    const { showToast } = useToast();
 
     const [clientState, setClientState] = useState({
         predictionFormValue : {
@@ -59,6 +64,11 @@ export default function Prediction() {
             }))
 
             // will toast here
+            showToast({
+                type: "success",
+                title: "Prediction created",
+                message: "Your inflation forecast is ready.",
+            })
         
         } 
         catch (error) {
@@ -68,7 +78,11 @@ export default function Prediction() {
                 ...prev,
                 isError : true
             }))
-            console.log('prediction have an error', error);
+            showToast({
+                type: "error",
+                title: "Prediction failed",
+                message: `${error}`
+            })
         }
         finally {
            setClientState(prev => ({
@@ -78,95 +92,433 @@ export default function Prediction() {
         }
     }
 
-    // for render in ui logic
-    const renderStatus = () => {
-       
-        if (clientState.isError) {
-            return <p>Prediction failed! Please try again later.</p>
-        }
+    const predictionResult = serverState.predictionResult;
+    const hasPrediction = predictionResult.length > 0;
 
-        if (serverState.predictionResult.length > 0) {
-            return <p>Prediction Successfully!</p>
-        }
+    /*
+     * Get useful summary values from prediction.
+     *
+     * First item is the starting/current amount.
+     * Last item represents the final forecast.
+     */
 
-        return <p>No Prediction Data.</p>
-    }
+    const firstPrediction = predictionResult[0];
+    const lastPrediction = predictionResult[predictionResult.length - 1];
 
-    const renderPredictionResult = () => {
-        if (serverState.predictionResult.length <= 0) { return null }
-
-        return (
-            <div className="flex flex-col p-6 gap-4">
-                <div className="flex flex-col gap-2">
-                    <div className="flex justify-between border-b-2 border-dashed border-black/60">
-                        <div className="">Amount</div>
-                        <div className="">Inflation Rate</div>
-                        <div className=""> Year</div>
-                    </div>
-                    { serverState.predictionResult.map( item  => (
-                        <div key={item.year} className="flex justify-between">
-                            <p>{item.amount}</p>
-                            <p>{((item.inflation_rate) * 100 ).toFixed(2)} %</p>
-                            <p>{item.year}</p>
-                        </div>
-                    ))}
-
-                    {/* ChartPrediction component */}
-                    <ChartPrediction 
-                        predictionResult={serverState.predictionResult} 
-                    />
-                </div>
-            </div>
-        )
-    }
-
-
-    return(
+    return (
         <main className="min-h-screen bg-white text-black">
-            <form onSubmit={PredictionFormSubmit} className="p-4 space-y-2">
-                <div className="gap-2 flex">
-                    <label htmlFor="">Enter Year Here : (1 - 150) years</label>
-                    <input 
-                        type="number" 
-                        name="n_years" 
-                        value={clientState.predictionFormValue.n_years}
-                        onChange={PredictionFormValueChange}
-                        id="n_years" 
-                        className="border"
-                        required
-                        min={1}
-                        max={150}
-                        disabled={clientState.isLoading}
-                    />
-                </div>
-                <div className="gap-2 flex">
-                    <label htmlFor="">Enter Initial Amount</label>
-                    <input 
-                        type="number" 
-                        name="initial_amount"
-                        value={clientState.predictionFormValue.initial_amount}
-                        onChange={PredictionFormValueChange} 
-                        id="initial_amount" 
-                        className="border" 
-                        required
-                        min={1}
-                        disabled={clientState.isLoading}
-                    />
+
+            {/* Page Header */}
+            <section className="border-b border-black/10 bg-brand-50">
+
+                <div
+                    className="mx-auto w-full
+                        max-w-7xl px-4 py-14
+                        sm:px-6 lg:px-8"
+                >
+
+                    <div className="max-w-2xl">
+
+                        <p
+                            className="
+                                text-body-sm
+                                font-medium
+                                uppercase
+                                tracking-[0.2em]
+                                text-brand-700
+                            "
+                        >
+                            Inflation Forecast
+                        </p>
+
+                        <h1
+                            className="
+                                mt-3
+                                text-h1
+                                font-bold
+                                leading-tight
+                                tracking-tight
+                                text-black
+                            "
+                        >
+                            Forecast your money&apos;s future.
+                        </h1>
+
+                        <p
+                            className="
+                                mt-4
+                                max-w-xl
+                                text-body
+                                leading-7
+                                text-muted
+                            "
+                        >
+                            Enter an amount and a time horizon to
+                            explore how inflation could affect its
+                            value over time.
+                        </p>
+
+                    </div>
 
                 </div>
 
-                <button 
-                    type="submit" 
-                    className="border rounded-md"
-                    disabled={clientState.isLoading}
-                > 
-                    {clientState.isLoading ? 'Predicting...' : 'Get Prediction'}
-                </button>
-                { renderStatus() }
+            </section>
 
-            </form>
-            { renderPredictionResult()}   
-                     
+
+            {/* Main Content */}
+            <section>
+
+                <div
+                    className="
+                        mx-auto
+                        w-full
+                        max-w-7xl
+                        px-4
+                        py-10
+                        sm:px-6
+                        lg:px-8
+                    "
+                >
+
+                    <div
+                        className="
+                            grid
+                            gap-8
+                            lg:grid-cols-[320px_minmax(0,1fr)]
+                            lg:items-start
+                        "
+                    >
+
+                        {/* =========================
+                            INPUT PANEL
+                        ========================== */}
+
+                        <aside
+                            className="
+                                min-w-0
+                                rounded-xl
+                                border
+                                border-black/10
+                                bg-white
+                                p-6
+                                shadow-sm
+                            "
+                        >
+
+                            <div>
+
+                                <p
+                                    className="
+                                        text-caption
+                                        font-medium
+                                        uppercase
+                                        tracking-[0.15em]
+                                        text-black/50
+                                    "
+                                >
+                                    Your forecast
+                                </p>
+
+                                <h2
+                                    className="
+                                        mt-2
+                                        text-h3
+                                        font-semibold
+                                        tracking-tight
+                                    "
+                                >
+                                    Tell us about your money.
+                                </h2>
+
+                            </div>
+
+
+                            <form
+                                onSubmit={PredictionFormSubmit}
+                                className="mt-7 space-y-5"
+                            >
+
+                                {/* Amount */}
+                                <div className="space-y-2">
+
+                                    <label
+                                        htmlFor="initial_amount"
+                                        className="
+                                            block
+                                            text-body-sm
+                                            font-medium
+                                        "
+                                    >
+                                        Initial amount
+                                    </label>
+
+                                    <div className="relative">
+
+                                        <span
+                                            className="
+                                                pointer-events-none
+                                                absolute
+                                                left-3
+                                                top-1/2
+                                                -translate-y-1/2
+                                                text-body-sm
+                                                text-black/40
+                                            "
+                                        >
+                                            ฿
+                                        </span>
+
+                                        <input
+                                            id="initial_amount"
+                                            name="initial_amount"
+                                            type="number"
+                                            value={
+                                                clientState
+                                                    .predictionFormValue
+                                                    .initial_amount
+                                            }
+                                            onChange={
+                                                PredictionFormValueChange
+                                            }
+                                            min={1}
+                                            required
+                                            disabled={
+                                                clientState.isLoading
+                                            }
+                                            placeholder="100000"
+                                            className="
+                                                w-full
+                                                min-w-0
+                                                rounded-md
+                                                border
+                                                border-black/15
+                                                bg-white
+                                                py-3
+                                                pl-8
+                                                pr-3
+                                                text-body
+                                                outline-none
+                                                transition
+                                                focus:border-brand-500
+                                                focus:ring-2
+                                                focus:ring-brand-500/20
+                                                disabled:cursor-not-allowed
+                                                disabled:bg-black/5
+                                            "
+                                        />
+
+                                    </div>
+
+                                    <p
+                                        className="
+                                            text-caption
+                                            text-muted
+                                        "
+                                    >
+                                        Amount you want to forecast.
+                                    </p>
+
+                                </div>
+
+
+                                {/* Years */}
+                                <div className="space-y-2">
+
+                                    <label
+                                        htmlFor="n_years"
+                                        className="
+                                            block
+                                            text-body-sm
+                                            font-medium
+                                        "
+                                    >
+                                        Forecast period
+                                    </label>
+
+                                    <div className="relative">
+
+                                        <input
+                                            id="n_years"
+                                            name="n_years"
+                                            type="number"
+                                            value={
+                                                clientState
+                                                    .predictionFormValue
+                                                    .n_years
+                                            }
+                                            onChange={
+                                                PredictionFormValueChange
+                                            }
+                                            min={1}
+                                            max={150}
+                                            required
+                                            disabled={
+                                                clientState.isLoading
+                                            }
+                                            placeholder="10"
+                                            className="
+                                                w-full
+                                                min-w-0
+                                                rounded-md
+                                                border
+                                                border-black/15
+                                                bg-white
+                                                py-3
+                                                pl-3
+                                                pr-14
+                                                text-body
+                                                outline-none
+                                                transition
+                                                focus:border-brand-500
+                                                focus:ring-2
+                                                focus:ring-brand-500/20
+                                                disabled:cursor-not-allowed
+                                                disabled:bg-black/5
+                                            "
+                                        />
+
+                                        <span
+                                            className="
+                                                pointer-events-none
+                                                absolute
+                                                right-3
+                                                top-1/2
+                                                -translate-y-1/2
+                                                text-body-sm
+                                                text-black/40
+                                            "
+                                        >
+                                            years
+                                        </span>
+
+                                    </div>
+
+                                    <p
+                                        className="
+                                            text-caption
+                                            text-muted
+                                        "
+                                    >
+                                        Choose between 1 and 150 years.
+                                    </p>
+
+                                </div>
+
+
+                                {/* Error */}
+                                {clientState.isError && (
+                                    <div
+                                        className="
+                                            rounded-md
+                                            border
+                                            border-error/20
+                                            bg-error/5
+                                            px-3
+                                            py-2
+                                            text-body-sm
+                                            text-error
+                                        "
+                                    >
+                                        Prediction failed. Please try
+                                        again later.
+                                    </div>
+                                )}
+
+
+                                {/* Submit */}
+                                <button
+                                    type="submit"
+                                    disabled={clientState.isLoading}
+                                    className="
+                                        inline-flex
+                                        w-full
+                                        items-center
+                                        justify-center
+                                        rounded-md
+                                        bg-brand-500
+                                        px-5
+                                        py-3
+                                        text-body-sm
+                                        font-semibold
+                                        text-black
+                                        transition
+                                        hover:bg-brand-400
+                                        disabled:cursor-not-allowed
+                                        disabled:opacity-60
+                                    "
+                                >
+
+                                    {clientState.isLoading ? (
+                                        <span className="flex items-center gap-2">
+
+                                            <span
+                                                className="
+                                                    h-4
+                                                    w-4
+                                                    animate-spin
+                                                    rounded-full
+                                                    border-2
+                                                    border-black/20
+                                                    border-t-black
+                                                "
+                                            />
+
+                                            Predicting...
+
+                                        </span>
+                                    ) : (
+                                        "Make a Prediction"
+                                    )}
+
+                                </button>
+
+                            </form>
+
+                        </aside>
+
+
+                        {/* =========================
+                            RESULT AREA
+                        ========================== */}
+
+                        <div
+                            className="
+                                min-w-0
+                            "
+                        >
+
+                            {clientState.isLoading ? (
+
+                                <PredictionResultSkeleton />
+
+                            ) : hasPrediction ? (
+
+                                <PredictionResultView
+                                    predictionResult={
+                                        predictionResult
+                                    }
+                                    firstPrediction={
+                                        firstPrediction
+                                    }
+                                    lastPrediction={
+                                        lastPrediction
+                                    }
+                                />
+
+                            ) : (
+
+                                <PredictionEmptyState />
+
+                            )}
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
         </main>
     );
 }

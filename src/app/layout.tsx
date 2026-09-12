@@ -4,6 +4,7 @@ import "./globals.css";
 import NavBar from "@/components/navbar";
 import GoogleProvider from "@/components/providers/googleProvider";
 import { AuthProvider } from "@/components/contexts/authContext";
+import { ToastProvider } from "@/components/contexts/toastContext";
 
 
 const geistSans = Geist({
@@ -26,13 +27,16 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
+      data-scroll-behavior="smooth"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col" suppressHydrationWarning>
         <GoogleProvider>
           <AuthProvider>
-            <NavBar/>
-            {children}
+            <ToastProvider>
+              <NavBar/>
+              {children}
+            </ToastProvider>
           </AuthProvider>
         </GoogleProvider>
       </body>

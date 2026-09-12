@@ -46,6 +46,14 @@ export default function NavBar() {
                             About 
                         </Link> 
 
+                        <Link href="/prediction" className=" text-white/70 transition hover:text-white hover:bg-white/10 p-2 rounded-md" > 
+                            Forecast
+                        </Link> 
+
+                        <Link href="/dashboard/history" className=" text-white/70 transition hover:text-white hover:bg-white/10 p-2 rounded-md" > 
+                            Activity 
+                        </Link> 
+
                         { isLoading ? ( <AuthSkeletonNavbar /> ) : 
                                 user ? ( <UserSectionNavbar 
                                             name={user.name} 
@@ -112,6 +120,26 @@ export default function NavBar() {
                                     }))}
                                 > 
                                     About 
+                                </Link> 
+                                <Link 
+                                    href="/prediction" 
+                                    className=" rounded-md px-3 py-3 text-body-sm text-white/80 transition hover:bg-white/10 hover:text-white " 
+                                    onClick={() => setClientState(prev => ({
+                                        ...prev,
+                                        isMobileMenuOpen : false
+                                    }))}
+                                > 
+                                    Forecast
+                                </Link> 
+                                <Link 
+                                    href="/dashboard/history" 
+                                    className=" rounded-md px-3 py-3 text-body-sm text-white/80 transition hover:bg-white/10 hover:text-white " 
+                                    onClick={() => setClientState(prev => ({
+                                        ...prev,
+                                        isMobileMenuOpen : false
+                                    }))}
+                                > 
+                                    Activity
                                 </Link> 
 
                                 {/* Mobile auth section */} 

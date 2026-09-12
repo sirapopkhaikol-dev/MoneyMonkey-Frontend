@@ -40,6 +40,7 @@ export function useApi() {
     ) => {
 
         try {
+            
             // prevent when accessToken state is null when start app
             // if (isLoading === true && accessToken === null) {return}  we will change to detect in component instead
             const res = await ApiServices.apiFetch('post', url, body, accessToken)
@@ -50,7 +51,6 @@ export function useApi() {
             // invalid (logout) or 
             // Network Error or 
             // Api Error
-            // console.error('error ->>>>',error);
             return await ApiHandler(error, 'post', url, body);
  
         }
@@ -70,7 +70,7 @@ export function useApi() {
 
                 // 1. Unauthorize (Send Api without headers['Authorization'] = `Bearer ${accessToken}`) to the protect api
                 case "UNAUTHORIZED":
-                    console.log(error.message);
+                    // console.log(error.message);
                     // in component will receive error.message , error.status to toast
                     throw error;
 
@@ -100,8 +100,9 @@ export function useApi() {
                             // case 'INVALID_REFRESH_TOKEN'
                             // case 'USER_NOT_LOGIN'
                             // case 'USER_NOT_FOUND'
-                            console.log(error.message)
-                            console.log(error.status)
+
+                            // console.log(error.message)
+                            // console.log(error.status)
 
                             throw error
 
@@ -113,7 +114,7 @@ export function useApi() {
 
                 // 3. Access token invalid
                 case "INVALID_ACCESS_TOKEN":
-                    console.log(error.message)
+                    // console.log(error.message)
                     // - logout, clear token, redirect
                     // - component that call this before will receive error.message , error.status to toast
                     throw error

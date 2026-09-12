@@ -2,11 +2,14 @@ import AuthServices from "@/services/auth";
 import { LoginModalProps } from "@/types/loginModal";
 import { GoogleLogin } from "@react-oauth/google";
 import { useAuth } from "../contexts/authContext";
+import { useToast } from "../contexts/toastContext";
 
 
 export default function LoginModal( { setIsLoginOpen } : LoginModalProps ) {
     
     const { login } = useAuth();
+
+    const { showToast } = useToast();
 
     const GoogleResponse =  async (credential : string | undefined) => {
         try {
@@ -20,7 +23,11 @@ export default function LoginModal( { setIsLoginOpen } : LoginModalProps ) {
             
         } catch (error) {
             //toast here
-            console.log('error ->>>>',error);
+            showToast({
+                type: "error",
+                title: `Google login fail`,
+                message: `${error}`
+            })
         }
     }
 
@@ -53,7 +60,14 @@ export default function LoginModal( { setIsLoginOpen } : LoginModalProps ) {
 
                 <GoogleLogin
                     onSuccess={(response) => GoogleResponse(response.credential)}
-                    onError={() => {console.log("Google Login Failed");}}
+                    onError={() => {
+                        showToast({
+                            type: "error",
+                            title: `Google login fail`,
+                            message: `Google login fail`
+                        })
+                        }
+                    }
                 />
  
 
