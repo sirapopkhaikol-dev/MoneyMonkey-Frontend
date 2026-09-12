@@ -20,6 +20,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "MoneyMonkey",
   description: "AI-powered inflation forecasting",
+  icons: {
+        icon: "/official_logo.png",
+    },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
