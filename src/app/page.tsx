@@ -133,7 +133,7 @@ export default function Home() {
 
                       <a
                           title="Watch Video"
-                          href="YOUR_YOUTUBE_VIDEO_URL"
+                          href="https://youtu.be/ijwsxnDjpcA?si=R_7NDWeG5rRtMTwQ"
                           target="_blank"
                           rel="noopener noreferrer"
                           className="
